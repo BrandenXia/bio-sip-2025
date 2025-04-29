@@ -1,0 +1,59 @@
+#!/usr/bin/env python3
+
+from query import geneid2loc, loc2region
+
+ids = {
+    "GB12261": "GB40098",
+    "GB15934": "GB40114",
+    "GB19963": "GB40147",
+    "GB10346": "GB40100",
+    "GB17157": "GB40112",
+    "GB13792": "GB40109",
+    "GB17877": "GB40108",
+    "GB14482": "GB40107",
+    "GB16306": "GB40102",
+    "GB20085": "GB40106",
+    "GB18752": "GB40103",
+    "GB12880": "GB53867",
+    "GB18979": ["GB45779", "GB47791"],
+    "GB15643": "GB47788",
+    "GB12076": "GB47783",
+    "GB14213": "GB47781",
+    "GB10659": "GB47779",
+    "GB14857": "GB47799",
+    "GB14683": "GB47488",
+    "GB18486": "GB47489",
+    "GB11040": "GB47405",
+    "GB11297": "GB47402",
+    "GB13498": "GB47401",
+    "GB15586": "GB47400",
+    "GB13830": "GB47399",
+    "GB18552": "GB47493",
+    "GB15616": "GB47398",
+    "GB16335": ["GB47396", "GB47397"],
+    "GB15201": "GB47495",
+    "GB18167": "GB47495",
+    "GB12620": ["GB47394", "GB47395"],
+    "GB13732": "GB47496",
+    "GB19675": "GB47497",
+    "GB10904": "GB47393",
+    "GB14291": "GB47498",
+    "GB15320": "GB47392",
+    "GB13612": "GB47499",
+    "GB13383": "GB47391",
+    "GB11385": "GB47500",
+    "GB10946": "GB47389",
+    "GB14152": ["GB47388", "GB47502"],
+}
+
+for old_geneid, new_geneids in ids.items():
+    if isinstance(new_geneids, str):
+        new_geneids = [new_geneids]
+
+    for id in new_geneids:
+        try:
+            loc = geneid2loc(id)
+        except IndexError:
+            continue
+        region, start, end = loc2region(loc)
+        print(f"{old_geneid} -> {id}", region, f"{start}-{end}", sep="\t")

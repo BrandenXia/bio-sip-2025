@@ -1,0 +1,42 @@
+#!/usr/bin/env python3
+
+import subprocess
+
+from utils import ROOT_DIR
+
+
+def print_go_id_info(item):
+    print(item)
+    res = subprocess.run(
+        [ROOT_DIR / "code" / "query_go", item], capture_output=True, text=True
+    )
+    if res.returncode != 0:
+        raise ValueError(f"Failed to get GO ID for {item}")
+    if res.stdout.strip() != "":
+        print(res.stdout.strip())
+    else:
+        print("Nothing found")
+
+
+annotations: dict[str, str | list[str]] = {
+    "cyclin-dependent protein kinase activating kinase holoenzyme complex": "GO:0019907",
+    "Ortholog of B-H2, B-HI and NK7.1 transcription factors": [
+        "GO:0042113",
+        "GO:1905489",
+        "GO:1905491",
+        "GO:1905490",
+    ],
+    "Fez-like zine finger, putative transcriptional regulator": "GO:0140110",
+    "Bazooka/PAR-3": ["GO:0034748", "GO:0120157"],
+    "Similar to ubiquitin conjugating enzyme 7": ["GO:0061631"],
+    "Midway, influences lipid metabolism, oogenesis and 1IS": ["GO:0071797"],
+}
+
+for name, go_id in annotations.items():
+    print(name)
+    print("-" * len(name))
+    if isinstance(go_id, str):
+        print_go_id_info(go_id)
+    else:
+        [print_go_id_info(item) for item in go_id]
+    print()

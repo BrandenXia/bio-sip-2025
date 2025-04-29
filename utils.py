@@ -6,6 +6,7 @@ from pathlib import Path
 ROOT_DIR = Path(__file__).parent.parent
 GAF_DIR = ROOT_DIR / "gaf"
 GFF_DIR = ROOT_DIR / "gff"
+GTF_DIR = ROOT_DIR / "gtf"
 
 
 def rg_search(path: Path, pattern: str) -> list[str]:
